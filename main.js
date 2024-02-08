@@ -15,23 +15,26 @@ const addTodo = ()=>{
 
     } else {
         const newTodo = document.createElement('div')
+        const newInput = document.createElement('div')
         const button = document.createElement('button')
         const span = document.createElement('span')
         const containerSpan = document.createElement('div');
 
         containerSpan.classList.add('new-container')
         newTodo.classList.add('new-todo')
+        newInput.classList.add('new-input')
         button.classList.add('new-button')
         span.classList.add('span-contador')
 
-        contador++   
-        span.innerHTML = `${contador}. <span style="color: white;">${input.value}</span>`
+        contador++ 
+        span.innerHTML = `${contador}. `
+        newInput.innerHTML = input.value
         button.innerText = 'excluir'
 
         const todos = document.querySelectorAll('.new-todo')
 
         containerTodo.insertBefore(newTodo,todos[0])  
-        containerSpan.appendChild(span)
+        containerSpan.append(span,newInput)
 
         if (containerTodo.children.length == 2){
             todoList.style.marginBottom = '2rem'
@@ -56,12 +59,22 @@ const addTodo = ()=>{
         input.value = ''
 
         button.addEventListener('click',()=>{
+            let spanDelete = parseInt(span.innerText)
             newTodo.remove()
-            contador--          
+            contador--
+
+            const spanAll = document.querySelectorAll('span')  
+            spanAll.forEach((e)=>{
+                if (parseInt(e.innerText) > spanDelete) {
+                    e.innerHTML = `${parseInt(e.innerText)-1}. <span style="color: white;">${input.value}</span>`
+                }
+            })
+          
+
             if(containerTodo.children.length < 2){
                 todoList.style.marginBottom = '0'
             }  
-    
+            
             const deletado = document.createElement('div')
             deletado.classList.add('deletado')
             deletado.innerHTML = 'Conteudo Deletado'

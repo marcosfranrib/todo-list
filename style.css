@@ -83,6 +83,10 @@ button{
     
 }
 
+.new-input{
+    display: inline;
+}
+
 .span-contador{
     color: #434347;
 }
